@@ -1,18 +1,12 @@
-
 #include <stdio.h>
 #include "list_head.h"
-
-typedef struct person_s{
-	int age;
-	int weight;
-	struct list_head list;
-}person_t;
 
 int main(int argc, char* argv[])
 {
 	person_t *tmp;
 	struct list_head *pos, *n;
 	int age_i, weight_j;
+	char sex_k;
 
 	/* 定义并初始化一个链表头 */
 	person_t person_head;
@@ -34,14 +28,14 @@ int main(int argc, char* argv[])
 	printf("print the list\n");
 	list_for_each(pos, &person_head.list){
 		tmp = list_entry(pos, person_t, list); /* 取得pos所在结构指针 */
-		printf("age:%d,  weight: %d \n", tmp->age, tmp->weight);
+		printf("age:%d,  weight: %d, sex: %s \n", tmp->age, tmp->weight, tmp->sex);
 	}
 	printf("\n");
 	/* 删除节点，age20 */
 	printf("print list after delete a node which age is 20\n");
 	list_for_each_safe(pos, n, &person_head.list){
 		tmp = list_entry(pos, person_t, list);
-		if(tmp->age == 20){
+		if(tmp->weight == 50 || tmp->age == 30 || tmp->age == 20 || tmp->age == 10){
 			list_del_init(pos);
 			free(tmp);
 		}
@@ -49,7 +43,7 @@ int main(int argc, char* argv[])
 
 	list_for_each(pos, &person_head.list){
 		tmp = list_entry(pos, person_t, list);
-		printf("age:%d,  weight: %d \n", tmp->age, tmp->weight);
+		printf("age:%d,  weight: %d, sex: %s \n", tmp->age, tmp->weight, tmp->sex);
 	}
 
 	list_for_each_safe(pos, n, &person_head.list){
