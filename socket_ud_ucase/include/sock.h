@@ -5,5 +5,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#define SV_SOCK_PATH "/tmp/us_xfr"
+#define SV_SOCK_PATH "/tmp/ud_ucase"
+
 #define BUF_SIZE 100
