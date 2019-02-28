@@ -1,23 +1,60 @@
-#include "memalign.h"
+#include <stdio.h>
 #include <string.h>
 
-int main(int argc, char *argv[])
+int next[32] = {-999};
+
+void get_next(char *T, int *next)
 {
-	char *s = "st1r234st9r";
-	char *l = "1r234";
-	char *p;
-	char string[] = {"string123"};
+    int k = -1, j = 0;
+    next[j] = k;
 
-	printf("string = %s\n", string);
+    while (j < strlen(T)){
+        if ((k == -1) || (T[j] == T[k])){
+            ++k;
+            ++j;
+            next[j] = k;
+        }else
+				  k = next[k];
+    }
+}
 
+int index_kmp(char *S, char *T, int pos)
+{
+    int i = pos, j = 0;
 
-	p = strstr(s, l);
+    while((i < strlen(S)) && (j < strlen(T)) ){
+        if ((j == -1) || S[i] == T[j]){
+					i++;
+					j++;
+        }else
+					j = next[j];
+    }
 
-	printf("s = %s\n", s);
-	printf("l = %s\n", l);
+    if (strlen(T) == j)
+        return i - strlen(T);
+    else
+        return -1;
+}
 
-	if(p)
-	  printf("p = %s\n", p);
-	else
-	  printf("not found\n");
+void print_next(int next[], int n)
+{
+   int i;
+
+   for (i = 0; i < n; i++)
+       printf("next[%d] = %d\n", i, next[i]);
+}
+
+int main(void)
+{
+    char *s = "ababcabcacbab";
+    char *t = "abcac";
+    int pos = 0;
+    int index;
+
+    printf("kmp\n");
+    get_next(t, next);
+    print_next(next, strlen(t));
+
+    index = index_kmp(s, t, pos);
+    printf("index = %d\n", index);
 }
